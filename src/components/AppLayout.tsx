@@ -28,9 +28,13 @@ export function AppLayout({ children }: AppLayoutProps) {
             email: data.user.email,
             roleDisplayName: data.user.roleDisplayName,
           });
+        } else {
+          window.location.href = '/login';
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        window.location.href = '/login';
+      });
   }, []);
 
   return (

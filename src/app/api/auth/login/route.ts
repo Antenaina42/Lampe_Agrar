@@ -47,19 +47,39 @@ export async function POST(request: Request) {
     };
 
     await createSession(sessionUser);
-    await logAuditEvent({
-      userId: user.id,
-      action: 'LOGIN',
-      entity: 'USER',
-      entityId: user.id,
-      details: { email: user.email },
-    });
+    try {
+      await logAuditEvent({
+        userId: user.id,
+        action: 'LOGIN',
+        entity: 'USER',
+        entityId: user.id,
+        details: { email: user.email },
+      });
+    } catch (auditErr) {
+      console.warn('Non-blocking audit log error:', auditErr);
+    }
 
     return NextResponse.json({ success: true, user: sessionUser });
   } catch (error: any) {
     console.error('Login error:', error);
+
+    let errorMessage = 'Interner Serverfehler bei der Anmeldung.';
+    if (error?.code === 'P1001') {
+      errorMessage = 'Datenbank nicht erreichbar (P1001). Bitte Host (127.0.0.1 statt localhost) und Port prüfen.';
+    } else if (error?.code === 'P1000') {
+      errorMessage = 'Datenbank-Authentifizierung fehlgeschlagen (P1000). Benutzer oder Passwort ungültig.';
+    } else if (error?.code === 'P2021' || error?.message?.includes('does not exist')) {
+      errorMessage = 'Datenbanktabelle existiert nicht (P2021). Bitte database.sql in phpMyAdmin importieren.';
+    } else if (error?.message) {
+      errorMessage = `Anmeldefehler: ${error.message}`;
+    }
+
     return NextResponse.json(
-      { error: 'Interner Serverfehler bei der Anmeldung.' },
+      {
+        error: errorMessage,
+        code: error?.code,
+        details: error?.message,
+      },
       { status: 500 }
     );
   }

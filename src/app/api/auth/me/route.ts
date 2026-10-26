@@ -1,8 +1,8 @@
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
-import { getEffectiveUser } from '@/lib/auth';
+import { getServerSession } from '@/lib/auth';
 
 export async function GET() {
-  const user = await getEffectiveUser();
+  const user = await getServerSession();
   return NextResponse.json({ user });
 }
