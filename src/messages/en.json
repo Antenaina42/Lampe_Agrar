@@ -8,6 +8,22 @@
     "demoDataBadge": "DEMO DATA",
     "demoDataWarning": "Demonstration data is currently displayed. You can reset or remove it at any time in the settings."
   },
+  "auth": {
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "email": "Email Address",
+    "password": "Password",
+    "signInTitle": "Lampe Agrar Farm Manager",
+    "signInSubtitle": "Gesa & Dr. Josef Langenberg • Bockstedt",
+    "demoAccountsTitle": "Quick Demo Account Login:",
+    "roleOwnerF": "Farm Director",
+    "roleOwnerM": "Farm Director",
+    "roleCropsHead": "Head of Arable Farming",
+    "roleAuditor": "Tax Advisor / Auditor",
+    "loginFailed": "Login failed. Please check your credentials.",
+    "networkError": "Connection error to server.",
+    "footerLocation": "Lampe Agrar GbR • 49406 Bockstedt • Lower Saxony • www.hi-gesa.de"
+  },
   "common": {
     "save": "Save",
     "cancel": "Cancel",

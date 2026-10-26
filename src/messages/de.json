@@ -8,6 +8,22 @@
     "demoDataBadge": "DEMODATEN",
     "demoDataWarning": "Aktuell werden Demonstrationsdaten angezeigt. Diese können jederzeit über die Einstellungen zurückgesetzt oder gelöscht werden."
   },
+  "auth": {
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "email": "E-Mail-Adresse",
+    "password": "Passwort",
+    "signInTitle": "Lampe Agrar Finanzmanager",
+    "signInSubtitle": "Gesa & Dr. Josef Langenberg • Bockstedt",
+    "demoAccountsTitle": "Schnellauswahl Testzugang:",
+    "roleOwnerF": "Betriebsleiterin",
+    "roleOwnerM": "Betriebsleiter",
+    "roleCropsHead": "Ackerbauleiter",
+    "roleAuditor": "Steuerberater / Prüfer",
+    "loginFailed": "Anmeldung fehlgeschlagen. Bitte prüfen Sie Ihre Anmeldedaten.",
+    "networkError": "Verbindungsfehler zum Server.",
+    "footerLocation": "Lampe Agrar GbR • 49406 Bockstedt • Niedersachsen • www.hi-gesa.de"
+  },
   "common": {
     "save": "Speichern",
     "cancel": "Abbrechen",

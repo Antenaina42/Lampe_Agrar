@@ -8,6 +8,22 @@
     "demoDataBadge": "DONNÉES DE DÉMO",
     "demoDataWarning": "Des données de démonstration sont actuellement affichées. Vous pouvez les réinitialiser ou les supprimer dans les paramètres."
   },
+  "auth": {
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "signInTitle": "Lampe Agrar Finanzmanager",
+    "signInSubtitle": "Gesa & Dr. Josef Langenberg • Bockstedt",
+    "demoAccountsTitle": "Comptes de démonstration :",
+    "roleOwnerF": "Exploitante agricole",
+    "roleOwnerM": "Exploitant agricole",
+    "roleCropsHead": "Responsable des cultures",
+    "roleAuditor": "Expert-comptable / Auditeur",
+    "loginFailed": "Échec de connexion. Veuillez vérifier vos identifiants.",
+    "networkError": "Erreur de connexion au serveur.",
+    "footerLocation": "Lampe Agrar GbR • 49406 Bockstedt • Basse-Saxe • www.hi-gesa.de"
+  },
   "common": {
     "save": "Enregistrer",
     "cancel": "Annuler",
