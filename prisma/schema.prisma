@@ -1,0 +1,903 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum RoleType {
+  BETRIEBSLEITUNG
+  FINANZVERWALTUNG
+  ACKERBAULEITUNG
+  SCHWEINEMASTLEITUNG
+  MITARBEITER
+  STEUERBERATER
+}
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+  CASH
+  CREDIT
+}
+
+enum TransactionType {
+  REVENUE
+  EXPENSE
+}
+
+enum InvoiceType {
+  OUTGOING
+  INCOMING
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  PARTIALLY_PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER
+  DIRECT_DEBIT
+  CASH
+  CHECK
+  CARD
+}
+
+enum PaymentStatus {
+  CONFIRMED
+  PENDING
+  CANCELLED
+}
+
+enum ActivityType {
+  GENERAL
+  CROPS
+  LIVESTOCK
+  POTATO_STORAGE
+  MACHINERY
+  ADMIN
+}
+
+enum SeasonStatus {
+  PLANNED
+  GROWING
+  HARVESTED
+  CLOSED
+}
+
+enum PigBarnType {
+  OUTDOOR_CLIMATE_H4
+  FATTENING_H2
+}
+
+enum BatchStatus {
+  ACTIVE
+  CLOSED
+  QUARANTINE
+}
+
+enum LivestockMovementType {
+  ARRIVAL
+  SALE
+  DEATH
+  TRANSFER
+}
+
+enum LivestockExpenseCategory {
+  FEED
+  VET
+  BEDDING_STRAW
+  ENERGY
+  BARN_UPKEEP
+  LABOR
+  OTHER
+}
+
+enum StorageLocationType {
+  HALL_1_BULK
+  HALL_2_BULK
+  BOX_STORAGE
+}
+
+enum StorageStatus {
+  IN_STORAGE
+  DEPLETED
+  PARTIALLY_SOLD
+}
+
+enum StorageMovementType {
+  INCOMING
+  OUTGOING_SALE
+  LOSS_SORTING
+  CLEANING_LOSS
+}
+
+enum MachineCategory {
+  TRACTOR
+  HARVESTER
+  SPRAYER
+  SPREADER
+  TRAILER
+  TRUCK
+  TILLAGE
+  SLURRY_TANKER
+  FORKLIFT
+  STORAGE_EQUIPMENT
+}
+
+enum MachineExpenseType {
+  MAINTENANCE
+  REPAIR
+  FUEL
+  INSURANCE
+  INSPECTION_TUV
+  PARTS
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  SEASONAL
+  APPRENTICE
+  MANAGEMENT
+}
+
+enum InventoryCategory {
+  SEEDS
+  FERTILIZER
+  PESTICIDES
+  ANIMAL_FEED
+  STRAW_BEDDING
+  SPARE_PARTS
+  FUEL
+  WORKSHOP_SUPPLIES
+}
+
+enum InventoryMovementType {
+  PURCHASE_RECEIPT
+  USAGE_CROPS
+  USAGE_PIGS
+  USAGE_MACHINES
+  ADJUSTMENT
+}
+
+enum BudgetScenario {
+  OPTIMISTIC
+  CENTRAL
+  CAUTIOUS
+}
+
+enum InvestmentCategory {
+  MACHINERY
+  BUILDING
+  LIVESTOCK_FACILITY
+  STORAGE
+  LAND_IMPROVEMENT
+}
+
+enum FinancingType {
+  BANK_LOAN
+  OWN_EQUITY
+  LEASING
+}
+
+enum LoanStatus {
+  ACTIVE
+  PAID_OFF
+}
+
+enum MatchStatus {
+  MATCHED
+  UNMATCHED
+  IGNORED
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  ALERT
+  SUCCESS
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  name        RoleType @unique
+  displayName String
+  description String?
+  permissions Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  users       User[]
+}
+
+model User {
+  id           String          @id @default(cuid())
+  email        String          @unique
+  passwordHash String
+  name         String
+  roleId       String
+  role         Role            @relation(fields: [roleId], references: [id])
+  avatar       String?
+  isActive     Boolean         @default(true)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  preference   UserPreference?
+  auditLogs    AuditLog[]
+  notifications Notification[]
+}
+
+model UserPreference {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  language          String   @default("de") // de, en, fr
+  animationsEnabled Boolean  @default(true)
+  defaultCurrency   String   @default("EUR")
+  timezone          String   @default("Europe/Berlin")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model FarmSettings {
+  id               String   @id @default(cuid())
+  farmName         String   @default("Lampe Agrar")
+  legalName        String   @default("Lampe Agrar - Gesa & Dr. Josef Langenberg")
+  taxId            String?  @default("DE123456789")
+  vatId            String?  @default("DE987654321")
+  iban             String?
+  bic              String?
+  bankName         String?
+  address          String   @default("Hünenheide 3")
+  postalCode       String   @default("49406")
+  city             String   @default("Bockstedt / Drentwede")
+  phone            String   @default("04246/95026")
+  mobile           String   @default("0151/42343339")
+  email            String   @default("info@lampe-agrar.de")
+  website          String   @default("https://www.hi-gesa.de")
+  logoUrl          String?
+  fiscalYearStart  Int      @default(1)
+  fiscalYearEnd    Int      @default(12)
+  defaultVatRate   Decimal  @default(19.0) @db.Decimal(5, 2)
+  defaultLanguage  String   @default("de")
+  isDemoMode       Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String?
+  details   Json?
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
+
+model FinancialAccount {
+  id             String         @id @default(cuid())
+  name           String
+  accountType    AccountType    @default(CHECKING)
+  accountNumber  String?
+  iban           String?
+  bic            String?
+  initialBalance Decimal        @default(0.0) @db.Decimal(12, 2)
+  currentBalance Decimal        @default(0.0) @db.Decimal(12, 2)
+  currency       String         @default("EUR")
+  isDefault      Boolean        @default(false)
+  isActive       Boolean        @default(true)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  transactions   Transaction[]
+  payments       Payment[]
+  bankImports    BankImport[]
+}
+
+model TransactionCategory {
+  id             String          @id @default(cuid())
+  key            String          @unique
+  nameDe         String
+  nameEn         String
+  nameFr         String
+  type           TransactionType
+  defaultVatRate Decimal         @default(19.0) @db.Decimal(5, 2)
+  isSystem       Boolean         @default(true)
+  createdAt      DateTime        @default(now())
+}
+
+model Customer {
+  id               String       @id @default(cuid())
+  customerNumber   String       @unique
+  companyName      String
+  contactName      String?
+  email            String?
+  phone            String?
+  address          String?
+  postalCode       String?
+  city             String?
+  vatNumber        String?
+  paymentTermsDays Int          @default(30)
+  notes            String?      @db.Text
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  invoices         Invoice[]
+  cropSales        CropSale[]
+  livestockSales   LivestockSale[]
+  storageMovements StorageMovement[]
+  transactions     Transaction[]
+}
+
+model Supplier {
+  id               String         @id @default(cuid())
+  supplierNumber   String         @unique
+  companyName      String
+  contactName      String?
+  email            String?
+  phone            String?
+  address          String?
+  postalCode       String?
+  city             String?
+  vatNumber        String?
+  iban             String?
+  paymentTermsDays Int            @default(30)
+  notes            String?        @db.Text
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  invoices         Invoice[]
+  transactions     Transaction[]
+  investments      Investment[]
+  machineExpenses  MachineExpense[]
+  cropExpenses     CropExpense[]
+  livestockExpenses LivestockExpense[]
+  inventoryItems   InventoryItem[]
+}
+
+model Invoice {
+  id             String         @id @default(cuid())
+  invoiceNumber  String         @unique
+  type           InvoiceType    @default(OUTGOING)
+  customerId     String?
+  customer       Customer?      @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  supplierId     String?
+  supplier       Supplier?      @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  issueDate      DateTime
+  dueDate        DateTime
+  status         InvoiceStatus  @default(DRAFT)
+  subtotal       Decimal        @default(0.0) @db.Decimal(12, 2)
+  taxAmount      Decimal        @default(0.0) @db.Decimal(12, 2)
+  totalAmount    Decimal        @default(0.0) @db.Decimal(12, 2)
+  paidAmount     Decimal        @default(0.0) @db.Decimal(12, 2)
+  currency       String         @default("EUR")
+  language       String         @default("de") // de, en, fr for invoice rendering
+  activity       ActivityType   @default(GENERAL)
+  notes          String?        @db.Text
+  isDemo         Boolean        @default(false)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  lines          InvoiceLine[]
+  payments       Payment[]
+  transactions   Transaction[]
+  cropSales      CropSale[]
+  livestockSales LivestockSale[]
+}
+
+model InvoiceLine {
+  id          String   @id @default(cuid())
+  invoiceId   String
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  description String
+  quantity    Decimal  @default(1.0) @db.Decimal(10, 3)
+  unit        String   @default("Stk")
+  unitPrice   Decimal  @default(0.0) @db.Decimal(12, 2)
+  taxRate     Decimal  @default(19.0) @db.Decimal(5, 2)
+  taxAmount   Decimal  @default(0.0) @db.Decimal(12, 2)
+  subtotal    Decimal  @default(0.0) @db.Decimal(12, 2)
+  total       Decimal  @default(0.0) @db.Decimal(12, 2)
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  paymentNumber String        @unique
+  invoiceId     String?
+  invoice       Invoice?      @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+  accountId     String
+  account       FinancialAccount @relation(fields: [accountId], references: [id])
+  date          DateTime
+  amount        Decimal       @db.Decimal(12, 2)
+  paymentMethod PaymentMethod @default(BANK_TRANSFER)
+  reference     String?
+  notes         String?
+  status        PaymentStatus @default(CONFIRMED)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Transaction {
+  id                String          @id @default(cuid())
+  transactionNumber String          @unique
+  type              TransactionType
+  date              DateTime
+  categoryKey       String
+  description       String
+  amountNet         Decimal         @db.Decimal(12, 2)
+  vatRate           Decimal         @default(19.0) @db.Decimal(5, 2)
+  vatAmount         Decimal         @default(0.0) @db.Decimal(12, 2)
+  amountGross       Decimal         @db.Decimal(12, 2)
+  accountId         String
+  account           FinancialAccount @relation(fields: [accountId], references: [id])
+  customerId        String?
+  customer          Customer?       @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  supplierId        String?
+  supplier          Supplier?       @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  invoiceId         String?
+  invoice           Invoice?        @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+  activity          ActivityType    @default(GENERAL)
+  paymentMethod     PaymentMethod   @default(BANK_TRANSFER)
+  status            String          @default("CLEARED")
+  receiptUrl        String?
+  notes             String?
+  isDemo            Boolean         @default(false)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+model Crop {
+  id                         String       @id @default(cuid())
+  name                       String
+  code                       String       @unique
+  cropType                   String
+  standardMarketPricePerTon  Decimal      @default(0.0) @db.Decimal(10, 2)
+  expectedYieldTonPerHa      Decimal      @default(0.0) @db.Decimal(8, 2)
+  active                     Boolean      @default(true)
+  createdAt                  DateTime     @default(now())
+  updatedAt                  DateTime     @updatedAt
+  seasons                    CropSeason[]
+  cropSales                  CropSale[]
+}
+
+model Field {
+  id                  String       @id @default(cuid())
+  fieldNumber         String       @unique
+  name                String
+  areaHa              Decimal      @db.Decimal(8, 2)
+  soilQualityScore    Decimal?     @db.Decimal(5, 1) // Bodenpunkte (z.B. 45-65 in Bockstedt)
+  locationDescription String?
+  active              Boolean      @default(true)
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+  seasons             CropSeason[]
+}
+
+model CropSeason {
+  id               String        @id @default(cuid())
+  seasonYear       Int
+  cropId           String
+  crop             Crop          @relation(fields: [cropId], references: [id], onDelete: Cascade)
+  fieldId          String
+  field            Field         @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+  areaHa           Decimal       @db.Decimal(8, 2)
+  sowingDate       DateTime?
+  harvestDate      DateTime?
+  expectedYieldTons Decimal      @default(0.0) @db.Decimal(10, 2)
+  actualYieldTons  Decimal       @default(0.0) @db.Decimal(10, 2)
+  totalDirectCost  Decimal       @default(0.0) @db.Decimal(12, 2)
+  totalRevenue     Decimal       @default(0.0) @db.Decimal(12, 2)
+  grossMargin      Decimal       @default(0.0) @db.Decimal(12, 2)
+  status           SeasonStatus  @default(GROWING)
+  notes            String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  expenses         CropExpense[]
+  harvests         CropHarvest[]
+}
+
+model CropExpense {
+  id          String     @id @default(cuid())
+  seasonId    String
+  season      CropSeason @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  category    String     // Semences, Engrais, Phytosanitaire, Carburant, Prestataires
+  description String
+  date        DateTime
+  amountNet   Decimal    @db.Decimal(10, 2)
+  vatAmount   Decimal    @default(0.0) @db.Decimal(10, 2)
+  amountGross Decimal    @db.Decimal(10, 2)
+  supplierId  String?
+  supplier    Supplier?  @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  quantity    Decimal?   @db.Decimal(10, 2)
+  unit        String?
+  createdAt   DateTime   @default(now())
+}
+
+model CropHarvest {
+  id           String     @id @default(cuid())
+  seasonId     String
+  season       CropSeason @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  harvestDate  DateTime
+  quantityTons Decimal    @db.Decimal(10, 2)
+  qualityGrade String?
+  storedTons   Decimal    @default(0.0) @db.Decimal(10, 2)
+  soldTons     Decimal    @default(0.0) @db.Decimal(10, 2)
+  createdAt    DateTime   @default(now())
+  sales        CropSale[]
+}
+
+model CropSale {
+  id           String       @id @default(cuid())
+  cropId       String
+  crop         Crop         @relation(fields: [cropId], references: [id], onDelete: Cascade)
+  harvestId    String?
+  harvest      CropHarvest? @relation(fields: [harvestId], references: [id], onDelete: SetNull)
+  customerId   String
+  customer     Customer     @relation(fields: [customerId], references: [id])
+  invoiceId    String?
+  invoice      Invoice?     @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+  saleDate     DateTime
+  quantityTons Decimal      @db.Decimal(10, 2)
+  pricePerTon  Decimal      @db.Decimal(10, 2)
+  totalNet     Decimal      @db.Decimal(12, 2)
+  totalGross   Decimal      @db.Decimal(12, 2)
+  createdAt    DateTime     @default(now())
+}
+
+model PigBatch {
+  id                     String             @id @default(cuid())
+  batchNumber            String             @unique
+  barnType               PigBarnType        @default(OUTDOOR_CLIMATE_H4)
+  barnName               String
+  arrivalDate            DateTime
+  initialPigCount        Int
+  currentPigCount        Int
+  targetSlaughterDate    DateTime?
+  status                 BatchStatus        @default(ACTIVE)
+  initialAvgWeightKg     Decimal            @default(30.0) @db.Decimal(6, 2)
+  targetWeightKg         Decimal            @default(120.0) @db.Decimal(6, 2)
+  mortalityCount         Int                @default(0)
+  feedConversionRate     Decimal            @default(2.75) @db.Decimal(5, 2)
+  totalDirectCost        Decimal            @default(0.0) @db.Decimal(12, 2)
+  totalRevenue           Decimal            @default(0.0) @db.Decimal(12, 2)
+  grossMargin            Decimal            @default(0.0) @db.Decimal(12, 2)
+  notes                  String?
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+  movements              LivestockMovement[]
+  expenses               LivestockExpense[]
+  sales                  LivestockSale[]
+}
+
+model LivestockMovement {
+  id           String                @id @default(cuid())
+  batchId      String
+  batch        PigBatch              @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  movementType LivestockMovementType
+  date         DateTime
+  pigCount     Int
+  avgWeightKg  Decimal?              @db.Decimal(6, 2)
+  totalWeightKg Decimal?             @db.Decimal(10, 2)
+  pricePerKg   Decimal?              @db.Decimal(6, 2)
+  totalAmount  Decimal?              @db.Decimal(12, 2)
+  notes        String?
+  createdAt    DateTime              @default(now())
+}
+
+model LivestockExpense {
+  id          String                   @id @default(cuid())
+  batchId     String
+  batch       PigBatch                 @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  category    LivestockExpenseCategory
+  description String
+  date        DateTime
+  amountNet   Decimal                  @db.Decimal(10, 2)
+  vatAmount   Decimal                  @default(0.0) @db.Decimal(10, 2)
+  amountGross Decimal                  @db.Decimal(10, 2)
+  supplierId  String?
+  supplier    Supplier?                @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  quantity    Decimal?                 @db.Decimal(10, 2)
+  unit        String?
+  createdAt   DateTime                 @default(now())
+}
+
+model LivestockSale {
+  id           String    @id @default(cuid())
+  batchId      String
+  batch        PigBatch  @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  customerId   String
+  customer     Customer  @relation(fields: [customerId], references: [id])
+  invoiceId    String?
+  invoice      Invoice?  @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+  saleDate     DateTime
+  pigCount     Int
+  totalWeightKg Decimal  @db.Decimal(10, 2)
+  avgWeightKg  Decimal   @db.Decimal(6, 2)
+  pricePerKg   Decimal   @db.Decimal(6, 2)
+  bonusPenalty Decimal   @default(0.0) @db.Decimal(10, 2)
+  totalNet     Decimal   @db.Decimal(12, 2)
+  totalGross   Decimal   @db.Decimal(12, 2)
+  createdAt    DateTime  @default(now())
+}
+
+model StorageLot {
+  id                 String              @id @default(cuid())
+  lotNumber          String              @unique
+  cropType           String              @default("Industriekartoffeln")
+  storageLocation    StorageLocationType @default(HALL_1_BULK)
+  harvestYear        Int
+  initialWeightTons  Decimal             @db.Decimal(10, 2)
+  remainingWeightTons Decimal            @db.Decimal(10, 2)
+  qualityGrade       String?
+  status             StorageStatus       @default(IN_STORAGE)
+  originFieldInfo    String?
+  storageLossTons    Decimal             @default(0.0) @db.Decimal(10, 2)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  movements          StorageMovement[]
+}
+
+model StorageMovement {
+  id              String              @id @default(cuid())
+  lotId           String
+  lot             StorageLot          @relation(fields: [lotId], references: [id], onDelete: Cascade)
+  movementType    StorageMovementType
+  date            DateTime
+  weightTons      Decimal             @db.Decimal(10, 2)
+  buyerCustomerId String?
+  buyer           Customer?           @relation(fields: [buyerCustomerId], references: [id], onDelete: SetNull)
+  pricePerTon     Decimal?            @db.Decimal(10, 2)
+  totalAmountNet  Decimal?            @db.Decimal(12, 2)
+  destination     String?
+  notes           String?
+  createdAt       DateTime            @default(now())
+}
+
+model AgriculturalMachine {
+  id                     String           @id @default(cuid())
+  machineCode            String           @unique
+  name                   String
+  category               MachineCategory
+  brand                  String
+  model                  String
+  hp                     Int?
+  yearOfManufacture      Int?
+  purchaseDate           DateTime?
+  purchasePrice          Decimal          @default(0.0) @db.Decimal(12, 2)
+  residualValue          Decimal          @default(0.0) @db.Decimal(12, 2)
+  depreciationYears      Int              @default(8)
+  currentHoursOrKm       Decimal          @default(0.0) @db.Decimal(10, 1)
+  fuelConsumptionPerUnit Decimal?         @db.Decimal(6, 2)
+  insuranceAnnual        Decimal          @default(0.0) @db.Decimal(10, 2)
+  maintenanceAnnual      Decimal          @default(0.0) @db.Decimal(10, 2)
+  lastMaintenanceDate    DateTime?
+  nextMaintenanceDueHours Decimal?        @db.Decimal(10, 1)
+  active                 Boolean          @default(true)
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+  expenses               MachineExpense[]
+  usages                 MachineUsage[]
+}
+
+model MachineExpense {
+  id             String              @id @default(cuid())
+  machineId      String
+  machine        AgriculturalMachine @relation(fields: [machineId], references: [id], onDelete: Cascade)
+  expenseType    MachineExpenseType
+  date           DateTime
+  description    String
+  amountNet      Decimal             @db.Decimal(10, 2)
+  vatAmount      Decimal             @default(0.0) @db.Decimal(10, 2)
+  amountGross    Decimal             @db.Decimal(10, 2)
+  supplierId     String?
+  supplier       Supplier?           @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  operatingHours Decimal?            @db.Decimal(10, 1)
+  createdAt      DateTime            @default(now())
+}
+
+model MachineUsage {
+  id               String              @id @default(cuid())
+  machineId        String
+  machine          AgriculturalMachine @relation(fields: [machineId], references: [id], onDelete: Cascade)
+  date             DateTime
+  hoursUsed        Decimal             @db.Decimal(6, 1)
+  fieldId          String?
+  activity         ActivityType        @default(CROPS)
+  driverEmployeeId String?
+  fuelLitersUsed   Decimal?            @db.Decimal(8, 1)
+  createdAt        DateTime            @default(now())
+}
+
+model Employee {
+  id                  String         @id @default(cuid())
+  employeeNumber      String         @unique
+  firstName           String
+  lastName            String
+  roleTitle           String
+  employmentType      EmploymentType @default(FULL_TIME)
+  monthlyGrossSalary  Decimal        @db.Decimal(10, 2)
+  monthlyEmployerCost Decimal        @db.Decimal(10, 2)
+  allocatedActivity   ActivityType   @default(GENERAL)
+  hireDate            DateTime
+  active              Boolean        @default(true)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  costs               EmployeeCost[]
+}
+
+model EmployeeCost {
+  id                    String   @id @default(cuid())
+  employeeId            String
+  employee              Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  month                 Int
+  year                  Int
+  baseSalary            Decimal  @db.Decimal(10, 2)
+  employerSocialCharges Decimal  @db.Decimal(10, 2)
+  bonuses               Decimal  @default(0.0) @db.Decimal(10, 2)
+  totalCost             Decimal  @db.Decimal(10, 2)
+  hoursWorked           Decimal? @db.Decimal(6, 1)
+  createdAt             DateTime @default(now())
+}
+
+model InventoryItem {
+  id                String              @id @default(cuid())
+  itemCode          String              @unique
+  name              String
+  category          InventoryCategory
+  unit              String              @default("kg")
+  currentQuantity   Decimal             @default(0.0) @db.Decimal(10, 2)
+  minStockThreshold Decimal             @default(0.0) @db.Decimal(10, 2)
+  averageUnitPrice  Decimal             @default(0.0) @db.Decimal(10, 2)
+  totalStockValue   Decimal             @default(0.0) @db.Decimal(12, 2)
+  storageLocation   String?
+  supplierId        String?
+  supplier          Supplier?           @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  movements         InventoryMovement[]
+}
+
+model InventoryMovement {
+  id           String                @id @default(cuid())
+  itemId       String
+  item         InventoryItem         @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  movementType InventoryMovementType
+  date         DateTime
+  quantity     Decimal               @db.Decimal(10, 2)
+  unitPrice    Decimal               @db.Decimal(10, 2)
+  totalValue   Decimal               @db.Decimal(12, 2)
+  notes        String?
+  createdAt    DateTime              @default(now())
+}
+
+model Budget {
+  id          String         @id @default(cuid())
+  year        Int
+  scenario    BudgetScenario @default(CENTRAL)
+  name        String
+  description String?
+  isCurrent   Boolean        @default(false)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  lines       BudgetLine[]
+}
+
+model BudgetLine {
+  id             String       @id @default(cuid())
+  budgetId       String
+  budget         Budget       @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  activity       ActivityType @default(GENERAL)
+  categoryKey    String
+  plannedRevenue Decimal      @default(0.0) @db.Decimal(12, 2)
+  plannedExpense Decimal      @default(0.0) @db.Decimal(12, 2)
+  quarter        Int?
+  notes          String?
+}
+
+model Investment {
+  id                String             @id @default(cuid())
+  title             String
+  category          InvestmentCategory
+  amount            Decimal            @db.Decimal(12, 2)
+  purchaseDate      DateTime
+  supplierId        String?
+  supplier          Supplier?          @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  downPayment       Decimal            @default(0.0) @db.Decimal(12, 2)
+  financingType     FinancingType      @default(BANK_LOAN)
+  depreciationYears Int                @default(10)
+  salvageValue      Decimal            @default(0.0) @db.Decimal(12, 2)
+  notes             String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+}
+
+model Loan {
+  id                 String        @id @default(cuid())
+  loanNumber         String        @unique
+  lenderName         String
+  principalAmount    Decimal       @db.Decimal(12, 2)
+  interestRate       Decimal       @db.Decimal(5, 2)
+  startDate          DateTime
+  endDate            DateTime
+  termMonths         Int
+  monthlyPayment     Decimal       @db.Decimal(10, 2)
+  remainingPrincipal Decimal       @db.Decimal(12, 2)
+  status             LoanStatus    @default(ACTIVE)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  payments           LoanPayment[]
+}
+
+model LoanPayment {
+  id               String   @id @default(cuid())
+  loanId           String
+  loan             Loan     @relation(fields: [loanId], references: [id], onDelete: Cascade)
+  paymentDate      DateTime
+  totalPayment     Decimal  @db.Decimal(10, 2)
+  principalPortion Decimal  @db.Decimal(10, 2)
+  interestPortion  Decimal  @db.Decimal(10, 2)
+  remainingBalance Decimal  @db.Decimal(12, 2)
+  createdAt        DateTime @default(now())
+}
+
+model TaxRate {
+  id                      String   @id @default(cuid())
+  code                    String   @unique
+  name                    String
+  ratePercent             Decimal  @db.Decimal(5, 2)
+  isAgriculturalFlatRate  Boolean  @default(false)
+  active                  Boolean  @default(true)
+  createdAt               DateTime @default(now())
+}
+
+model BankImport {
+  id            String                 @id @default(cuid())
+  accountId     String
+  account       FinancialAccount       @relation(fields: [accountId], references: [id])
+  filename      String
+  importDate    DateTime               @default(now())
+  totalRows     Int
+  matchedRows   Int                    @default(0)
+  unmatchedRows Int                    @default(0)
+  matches       BankTransactionMatch[]
+}
+
+model BankTransactionMatch {
+  id                   String      @id @default(cuid())
+  importId             String
+  bankImport           BankImport  @relation(fields: [importId], references: [id], onDelete: Cascade)
+  date                 DateTime
+  description          String
+  amount               Decimal     @db.Decimal(12, 2)
+  status               MatchStatus @default(UNMATCHED)
+  matchedTransactionId String?
+  matchedInvoiceId     String?
+  createdAt            DateTime    @default(now())
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String?
+  user      User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  type      NotificationType @default(INFO)
+  linkUrl   String?
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+}
+
+model Attachment {
+  id         String   @id @default(cuid())
+  fileName   String
+  fileUrl    String
+  fileSize   Int
+  mimeType   String
+  entityType String
+  entityId   String
+  createdAt  DateTime @default(now())
+}
