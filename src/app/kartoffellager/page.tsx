@@ -227,22 +227,22 @@ export default function KartoffellagerPage() {
 
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1">
-                    Buchungsart
+                    {t('potatoStorage.bookingType')}
                   </label>
                   <select
                     value={movementType}
                     onChange={(e) => setMovementType(e.target.value)}
                     className="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg"
                   >
-                    <option value="OUTGOING_SALE">Verkauf / Lieferung an Abnehmer</option>
-                    <option value="LOSS_SORTING">Absortierung & Faulstellen</option>
-                    <option value="CLEANING_LOSS">Erdanteil / Waschentzug</option>
+                    <option value="OUTGOING_SALE">{t('potatoStorage.saleToCustomer')}</option>
+                    <option value="LOSS_SORTING">{t('potatoStorage.lossSorting')}</option>
+                    <option value="CLEANING_LOSS">{t('potatoStorage.lossCleaning')}</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1">
-                    Menge (Tonnen)
+                    {t('potatoStorage.weightTons')}
                   </label>
                   <input
                     type="number"
@@ -258,7 +258,7 @@ export default function KartoffellagerPage() {
                 {movementType === 'OUTGOING_SALE' && (
                   <div>
                     <label className="block text-xs font-semibold text-gray-700 mb-1">
-                      Verkaufspreis (€ / t)
+                      {t('potatoStorage.sellingPrice')}
                     </label>
                     <input
                       type="number"
@@ -283,7 +283,7 @@ export default function KartoffellagerPage() {
                     disabled={submitting}
                     className="px-4 py-2 text-xs font-bold text-white bg-[#226c3d] hover:bg-[#1b5e20] rounded-lg disabled:opacity-50"
                   >
-                    {submitting ? t('common.loading') : 'Auslagerung bestätigen'}
+                    {submitting ? t('common.loading') : t('potatoStorage.confirmOutflow')}
                   </button>
                 </div>
               </form>

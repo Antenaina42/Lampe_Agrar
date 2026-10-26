@@ -184,21 +184,21 @@ export default function LagerPage() {
   const getCategoryLabel = (cat: string) => {
     switch (cat) {
       case 'SEEDS':
-        return 'Saatgut';
+        return t('inventory.catSeeds');
       case 'FERTILIZER':
-        return 'Mineraldünger';
+        return t('inventory.catFertilizer');
       case 'PESTICIDES':
-        return 'Pflanzenschutz';
+        return t('inventory.catPesticides');
       case 'ANIMAL_FEED':
-        return 'Mastfutter';
+        return t('inventory.catAnimalFeed');
       case 'STRAW_BEDDING':
-        return 'Stroheinstreu';
+        return t('inventory.catStraw');
       case 'FUEL':
-        return 'Dieselkraftstoff';
+        return t('inventory.catFuel');
       case 'SPARE_PARTS':
-        return 'Ersatzteile';
+        return t('inventory.catSpareParts');
       case 'WORKSHOP_SUPPLIES':
-        return 'Werkstatt';
+        return t('inventory.catWorkshop');
       default:
         return cat;
     }
@@ -487,13 +487,13 @@ export default function LagerPage() {
                       onChange={(e) => setItemForm({ ...itemForm, category: e.target.value })}
                       className="w-full text-xs bg-white border border-[#e3ede5] rounded-xl px-3 py-2 text-[#2A3035] focus:outline-none focus:border-[#65BC7B]"
                     >
-                      <option value="ANIMAL_FEED">Mastfutter</option>
-                      <option value="FERTILIZER">Mineraldünger</option>
-                      <option value="PESTICIDES">Pflanzenschutz</option>
-                      <option value="SEEDS">Saatgut</option>
-                      <option value="FUEL">Dieselkraftstoff</option>
-                      <option value="STRAW_BEDDING">Stroheinstreu</option>
-                      <option value="SPARE_PARTS">Ersatzteile</option>
+                      <option value="ANIMAL_FEED">{t('inventory.catAnimalFeed')}</option>
+                      <option value="FERTILIZER">{t('inventory.catFertilizer')}</option>
+                      <option value="PESTICIDES">{t('inventory.catPesticides')}</option>
+                      <option value="SEEDS">{t('inventory.catSeeds')}</option>
+                      <option value="FUEL">{t('inventory.catFuel')}</option>
+                      <option value="STRAW_BEDDING">{t('inventory.catStraw')}</option>
+                      <option value="SPARE_PARTS">{t('inventory.catSpareParts')}</option>
                     </select>
                   </div>
                   <div>
@@ -622,13 +622,13 @@ export default function LagerPage() {
                       onChange={(e) => setItemForm({ ...itemForm, category: e.target.value })}
                       className="w-full text-xs bg-white border border-[#e3ede5] rounded-xl px-3 py-2 text-[#2A3035] focus:outline-none focus:border-[#65BC7B]"
                     >
-                      <option value="ANIMAL_FEED">Mastfutter</option>
-                      <option value="FERTILIZER">Mineraldünger</option>
-                      <option value="PESTICIDES">Pflanzenschutz</option>
-                      <option value="SEEDS">Saatgut</option>
-                      <option value="FUEL">Dieselkraftstoff</option>
-                      <option value="STRAW_BEDDING">Stroheinstreu</option>
-                      <option value="SPARE_PARTS">Ersatzteile</option>
+                      <option value="ANIMAL_FEED">{t('inventory.catAnimalFeed')}</option>
+                      <option value="FERTILIZER">{t('inventory.catFertilizer')}</option>
+                      <option value="PESTICIDES">{t('inventory.catPesticides')}</option>
+                      <option value="SEEDS">{t('inventory.catSeeds')}</option>
+                      <option value="FUEL">{t('inventory.catFuel')}</option>
+                      <option value="STRAW_BEDDING">{t('inventory.catStraw')}</option>
+                      <option value="SPARE_PARTS">{t('inventory.catSpareParts')}</option>
                     </select>
                   </div>
                   <div>

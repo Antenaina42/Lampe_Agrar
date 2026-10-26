@@ -374,8 +374,8 @@ export default function SchweinemastPage() {
                     }}
                     className="w-full text-xs bg-white border border-[#e3ede5] rounded-xl px-3 py-2 text-[#2A3035] focus:outline-none focus:border-[#65BC7B]"
                   >
-                    <option value="OUTDOOR_CLIMATE_H4">Außenklimastall H4 (Hünenheide - Stroh & Auslauf)</option>
-                    <option value="FATTENING_H2">Warmstall H2 (Bockstedt - StallhaltungPlus)</option>
+                    <option value="OUTDOOR_CLIMATE_H4">{t('pigFarming.barnH4Title')} (Stroh & Auslauf)</option>
+                    <option value="FATTENING_H2">{t('pigFarming.barnH2Title')} (StallhaltungPlus)</option>
                   </select>
                 </div>
 
@@ -554,9 +554,9 @@ export default function SchweinemastPage() {
                       onChange={(e) => setBatchForm({ ...batchForm, status: e.target.value })}
                       className="w-full text-xs bg-white border border-[#e3ede5] rounded-xl px-3 py-2 text-[#2A3035] focus:outline-none focus:border-[#65BC7B]"
                     >
-                      <option value="ACTIVE">ACTIVE (Laufend)</option>
-                      <option value="CLOSED">CLOSED (Ausgestallt)</option>
-                      <option value="QUARANTINE">QUARANTINE (Quarantäne)</option>
+                      <option value="ACTIVE">{t('common.active')}</option>
+                      <option value="CLOSED">{t('crops.closed')}</option>
+                      <option value="QUARANTINE">Quarantine</option>
                     </select>
                   </div>
                 </div>

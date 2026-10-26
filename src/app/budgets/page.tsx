@@ -587,7 +587,7 @@ export default function BudgetsPage() {
                         <span className="font-bold text-[#65BC7B]">{formatCurrency(s.actualExpense)}</span>
                       </div>
                       <div className="flex justify-between text-[#637381]">
-                        <span>AfA:</span>
+                        <span>{t('investments.depreciationYears')}:</span>
                         <span className="font-semibold text-[#2A3035]">{t('budgets.machineryEquip')}</span>
                       </div>
                     </div>
@@ -623,7 +623,7 @@ export default function BudgetsPage() {
                         <span className="font-bold text-[#65BC7B]">{formatCurrency(s.actualExpense)}</span>
                       </div>
                       <div className="flex justify-between text-[#637381]">
-                        <span>Team:</span>
+                        <span>{t('navigation.personal')}:</span>
                         <span className="font-semibold text-[#2A3035]">{t('budgets.staffCount')}</span>
                       </div>
                     </div>

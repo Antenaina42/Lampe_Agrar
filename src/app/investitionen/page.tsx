@@ -258,10 +258,10 @@ export default function InvestitionenPage() {
         {isModalOpen && modalType === 'INVESTMENT' && (
           <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-gray-200">
-              <h2 className="text-base font-bold text-gray-800 mb-4">Investition erfassen</h2>
+              <h2 className="text-base font-bold text-gray-800 mb-4">{t('investmentsPage.recordInvestment')}</h2>
               <form onSubmit={handleInvestmentSubmit} className="space-y-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">Objektbezeichnung *</label>
+                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('investmentsPage.objectName')}</label>
                   <input
                     type="text"
                     required
@@ -273,21 +273,21 @@ export default function InvestitionenPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Kategorie</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('investmentsPage.category')}</label>
                     <select
                       value={investmentForm.category}
                       onChange={(e) => setInvestmentForm({ ...investmentForm, category: e.target.value })}
                       className="w-full px-3 py-1.5 text-xs rounded-xl border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#226c3d]"
                     >
-                      <option value="BUILDING">Wirtschaftsgebäude</option>
-                      <option value="LIVESTOCK_FACILITY">Tierwohlstall H4</option>
-                      <option value="STORAGE">Kartoffellagerhalle</option>
-                      <option value="MACHINERY">Großmaschinen</option>
-                      <option value="LAND_IMPROVEMENT">Bodenmelioration / Drainage</option>
+                      <option value="BUILDING">{t('investmentsPage.catBuilding')}</option>
+                      <option value="LIVESTOCK_FACILITY">{t('investmentsPage.catBarnH4')}</option>
+                      <option value="STORAGE">{t('investmentsPage.catPotatoStorage')}</option>
+                      <option value="MACHINERY">{t('investmentsPage.catBigMachines')}</option>
+                      <option value="LAND_IMPROVEMENT">{t('investmentsPage.catDrainage')}</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Investitionssumme (€) *</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('investmentsPage.sum')}</label>
                     <input
                       type="number"
                       required
@@ -299,7 +299,7 @@ export default function InvestitionenPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Anschaffungsdatum</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('investmentsPage.purchaseDate')}</label>
                     <input
                       type="date"
                       value={investmentForm.purchaseDate}
@@ -308,7 +308,7 @@ export default function InvestitionenPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">AfA-Nutzungsdauer (Jahre)</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('investmentsPage.depreciationYears')}</label>
                     <input
                       type="number"
                       value={investmentForm.depreciationYears}
@@ -318,7 +318,7 @@ export default function InvestitionenPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">Notizen & Fördermittel</label>
+                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('investmentsPage.notes')}</label>
                   <textarea
                     rows={2}
                     value={investmentForm.notes}
@@ -332,13 +332,13 @@ export default function InvestitionenPage() {
                     onClick={() => setIsModalOpen(false)}
                     className="px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-100 rounded-xl"
                   >
-                    Abbrechen
+                    {t('common.cancel')}
                   </button>
                   <button
                     type="submit"
                     className="px-4 py-1.5 text-xs font-semibold bg-[#226c3d] text-white rounded-xl hover:bg-[#1a5530]"
                   >
-                    Speichern
+                    {t('common.save')}
                   </button>
                 </div>
               </form>
@@ -350,11 +350,11 @@ export default function InvestitionenPage() {
         {isModalOpen && modalType === 'LOAN' && (
           <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-gray-200">
-              <h2 className="text-base font-bold text-gray-800 mb-4">Bankdarlehen anlegen</h2>
+              <h2 className="text-base font-bold text-gray-800 mb-4">{t('investmentsPage.createLoan')}</h2>
               <form onSubmit={handleLoanSubmit} className="space-y-3">
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Darlehensnummer *</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('investmentsPage.loanNumber')}</label>
                     <input
                       type="text"
                       required
@@ -365,7 +365,7 @@ export default function InvestitionenPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Kreditinstitut *</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('investmentsPage.bankName')}</label>
                     <input
                       type="text"
                       required
@@ -377,7 +377,7 @@ export default function InvestitionenPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Kreditsumme (€) *</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('investmentsPage.principalAmount')}</label>
                     <input
                       type="number"
                       required
@@ -387,7 +387,7 @@ export default function InvestitionenPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Zinssatz (% p.a.) *</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('investmentsPage.interestRate')}</label>
                     <input
                       type="number"
                       step="0.01"
@@ -400,7 +400,7 @@ export default function InvestitionenPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Monatliche Rate (€) *</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('investmentsPage.monthlyRate')}</label>
                     <input
                       type="number"
                       required
@@ -410,7 +410,7 @@ export default function InvestitionenPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Laufzeit (Monate)</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('common.period')}</label>
                     <input
                       type="number"
                       value={loanForm.termMonths}
@@ -425,13 +425,13 @@ export default function InvestitionenPage() {
                     onClick={() => setIsModalOpen(false)}
                     className="px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-100 rounded-xl"
                   >
-                    Abbrechen
+                    {t('common.cancel')}
                   </button>
                   <button
                     type="submit"
                     className="px-4 py-1.5 text-xs font-semibold bg-[#226c3d] text-white rounded-xl hover:bg-[#1a5530]"
                   >
-                    Speichern
+                    {t('common.save')}
                   </button>
                 </div>
               </form>

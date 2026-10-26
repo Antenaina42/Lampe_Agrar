@@ -44,13 +44,13 @@ export default function KundenPage() {
                     {c.customerNumber}
                   </span>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-[#226c3d] font-bold">
-                    Zahlungsziel: {c.paymentTermsDays} Tage
+                    {t('suppliersPage.paymentTerms')}: {c.paymentTermsDays} {t('suppliersPage.paymentDays')}
                   </span>
                 </div>
                 <h2 className="text-base font-bold text-gray-800">{c.companyName}</h2>
                 {c.contactName && (
                   <p className="text-xs text-gray-500 mt-0.5 font-medium">
-                    Ansprechpartner: {c.contactName}
+                    {t('suppliersPage.contactPerson')}: {c.contactName}
                   </p>
                 )}
 
@@ -81,9 +81,9 @@ export default function KundenPage() {
               </div>
 
               <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
-                <span className="text-gray-400">Offene Rechnungen:</span>
+                <span className="text-gray-400">{t('dashboard.unpaidClientInvoices')}:</span>
                 <span className="font-bold text-gray-800">
-                  {c.invoices?.filter((i: any) => i.status !== 'PAID').length || 0} Dokumente
+                  {c.invoices?.filter((i: any) => i.status !== 'PAID').length || 0}
                 </span>
               </div>
             </div>

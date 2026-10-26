@@ -144,7 +144,7 @@ export default function BerichtePage() {
                 className="w-full mt-1 px-3 py-1.5 rounded-lg bg-[#226c3d] text-white text-xs font-bold hover:bg-[#1a5530] transition flex items-center justify-center gap-1.5"
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>PDF generieren</span>
+                <span>{t('reports.generatePdf')}</span>
               </button>
             </div>
           </div>
@@ -155,62 +155,62 @@ export default function BerichtePage() {
           <div className="bg-white rounded-2xl border border-[#e2e8df] shadow-sm overflow-hidden">
             <div className="p-4 border-b border-gray-100 flex items-center justify-between">
               <h2 className="text-sm font-bold text-gray-800">
-                Betriebswirtschaftliche Auswertung (BWA {selectedYear})
+                {t('reports.bwaTitle')} ({selectedYear})
               </h2>
               <span className="text-xs text-gray-400">
-                Basierend auf {data.transactionCount} Buchungssätzen
+                {t('reports.basedOn')} {data.transactionCount} {t('reports.transactionsCount')}
               </span>
             </div>
             <div className="divide-y divide-gray-100 text-xs">
               <div className="p-3.5 flex justify-between bg-emerald-50/40 font-bold text-gray-800">
-                <span>1. Umsatzerlöse & Gesamtleistung</span>
+                <span>{t('reports.revTotal')}</span>
                 <span className="text-[#226c3d]">{formatCurrency(data.bwa.totalRevenues)}</span>
               </div>
               <div className="px-6 py-2 flex justify-between text-gray-600 text-[11px]">
-                <span>- davon Kartoffelanbau & Hallenlager</span>
+                <span>{t('reports.revPotatoes')}</span>
                 <span>{formatCurrency(data.bwa.revenuePotatoes)}</span>
               </div>
               <div className="px-6 py-2 flex justify-between text-gray-600 text-[11px]">
-                <span>- davon Schweinemast (H4 & H2)</span>
+                <span>{t('reports.revPigs')}</span>
                 <span>{formatCurrency(data.bwa.revenuePigs)}</span>
               </div>
               <div className="px-6 py-2 flex justify-between text-gray-600 text-[11px]">
-                <span>- davon Ackerbau (Getreide, Raps, Zuckerrüben, Mais)</span>
+                <span>{t('reports.revCrops')}</span>
                 <span>{formatCurrency(data.bwa.revenueCrops)}</span>
               </div>
 
               <div className="p-3.5 flex justify-between text-gray-700 font-semibold">
-                <span>2. Materialaufwand & Wareneinsatz (Futter, Saatgut, Dünger, PSM, Diesel)</span>
+                <span>{t('reports.costMaterial')}</span>
                 <span className="text-rose-700">- {formatCurrency(data.bwa.materialCosts)}</span>
               </div>
 
               <div className="p-3.5 flex justify-between bg-gray-50/80 font-bold text-gray-900">
-                <span>= Rohertrag (Deckungsbeitrag I)</span>
+                <span>{t('reports.grossMargin1')}</span>
                 <span className="text-[#226c3d]">{formatCurrency(data.bwa.grossMargin)}</span>
               </div>
 
               <div className="p-3.5 flex justify-between text-gray-700 font-semibold">
-                <span>3. Personalaufwand (Mitarbeiter & Betriebsleitung)</span>
+                <span>{t('reports.costPersonnel')}</span>
                 <span className="text-rose-700">- {formatCurrency(data.bwa.annualPersonnelCost)}</span>
               </div>
 
               <div className="p-3.5 flex justify-between text-gray-700 font-semibold">
-                <span>4. Sonstige betriebliche Aufwendungen (Maschinenreparaturen, Pacht, Versicherung)</span>
+                <span>{t('reports.costOther')}</span>
                 <span className="text-rose-700">- {formatCurrency(data.bwa.otherExpenses)}</span>
               </div>
 
               <div className="p-3.5 flex justify-between bg-emerald-50/80 font-bold text-gray-900">
-                <span>= Betriebsergebnis vor Zinsen & Steuern (EBITDA)</span>
+                <span>= EBITDA</span>
                 <span className="text-emerald-800 text-sm">{formatCurrency(data.bwa.ebitda)}</span>
               </div>
 
               <div className="p-3.5 flex justify-between text-gray-700 font-semibold">
-                <span>5. Zinsaufwand (Darlehen & Kredite)</span>
+                <span>5. {t('investments.interestRate')}</span>
                 <span className="text-rose-700">- {formatCurrency(data.bwa.annualInterest)}</span>
               </div>
 
               <div className="p-4 flex justify-between bg-[#226c3d]/10 font-bold text-gray-900 text-sm">
-                <span>= Vorläufiges Betriebsergebnis vor Steuern</span>
+                <span>{t('reports.operatingResult')}</span>
                 <span className="text-[#226c3d] font-mono text-base">{formatCurrency(data.bwa.preTaxResult)}</span>
               </div>
             </div>

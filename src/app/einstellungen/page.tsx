@@ -164,7 +164,7 @@ export default function EinstellungenPage() {
         <div className="bg-white p-5 rounded-2xl border border-[#e2e8df] shadow-sm space-y-4">
           <div className="flex items-center gap-2 border-b border-gray-100 pb-3">
             <Globe className="w-4 h-4 text-[#226c3d]" />
-            <h2 className="text-sm font-bold text-gray-800">Sprache & Benutzeroberfläche</h2>
+            <h2 className="text-sm font-bold text-gray-800">{t('settings.languageAndUi')}</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -236,7 +236,7 @@ export default function EinstellungenPage() {
           <form onSubmit={handleSaveFarmSettings} className="space-y-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] font-semibold text-gray-600 mb-1">Betriebsbezeichnung</label>
+                <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('settings.farmName')}</label>
                 <input
                   type="text"
                   value={settingsForm.farmName}
@@ -245,7 +245,7 @@ export default function EinstellungenPage() {
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-gray-600 mb-1">Betriebsinhaber</label>
+                <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('settings.ownerName')}</label>
                 <input
                   type="text"
                   value={settingsForm.ownerName}
@@ -257,7 +257,7 @@ export default function EinstellungenPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="sm:col-span-2">
-                <label className="block text-[11px] font-semibold text-gray-600 mb-1">Straße & Hausnummer</label>
+                <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('settings.street')}</label>
                 <input
                   type="text"
                   value={settingsForm.street}
@@ -266,7 +266,7 @@ export default function EinstellungenPage() {
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-gray-600 mb-1">PLZ & Ort</label>
+                <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('settings.postalCity')}</label>
                 <input
                   type="text"
                   value={`${settingsForm.postalCode} ${settingsForm.city}`}
@@ -281,7 +281,7 @@ export default function EinstellungenPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] font-semibold text-gray-600 mb-1">Steuernummer (Finanzamt Sulingen / Diepholz)</label>
+                <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('settings.taxNumber')}</label>
                 <input
                   type="text"
                   value={settingsForm.taxNumber}
@@ -290,7 +290,7 @@ export default function EinstellungenPage() {
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-gray-600 mb-1">Umsatzsteuer-Identifikationsnummer (USt-IdNr.)</label>
+                <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('settings.vatNumber')}</label>
                 <input
                   type="text"
                   value={settingsForm.vatId}
@@ -302,7 +302,7 @@ export default function EinstellungenPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] font-semibold text-gray-600 mb-1">Hausbank</label>
+                <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('settings.mainBank')}</label>
                 <input
                   type="text"
                   value={settingsForm.bankName}
@@ -311,7 +311,7 @@ export default function EinstellungenPage() {
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-gray-600 mb-1">Betriebs-IBAN</label>
+                <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('settings.farmIban')}</label>
                 <input
                   type="text"
                   value={settingsForm.iban}

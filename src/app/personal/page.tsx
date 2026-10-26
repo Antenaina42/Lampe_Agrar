@@ -134,17 +134,17 @@ export default function PersonalPage() {
   const getBranchLabel = (branch: string) => {
     switch (branch) {
       case 'CROPS':
-        return '🌾 Ackerbau';
+        return `🌾 ${t('navigation.ackerbau')}`;
       case 'LIVESTOCK':
       case 'PIGS':
-        return '🐖 Schweinemast';
+        return `🐖 ${t('navigation.schweinemast')}`;
       case 'POTATO_STORAGE':
       case 'STORAGE':
-        return '🥔 Kartoffellager';
+        return `🥔 ${t('navigation.kartoffellager')}`;
       case 'MACHINERY':
-        return '🚜 Fuhrpark';
+        return `🚜 ${t('navigation.maschinen')}`;
       case 'GENERAL':
-        return '👥 Betriebsleitung / Allgemein';
+        return `👥 ${t('users.roleManagementTitle')}`;
       default:
         return branch;
     }
@@ -433,10 +433,10 @@ export default function PersonalPage() {
                       onChange={(e) => setFormData({ ...formData, employmentType: e.target.value })}
                       className="w-full text-xs bg-white border border-[#e3ede5] rounded-xl px-3 py-2 text-[#2A3035] focus:outline-none focus:border-[#65BC7B]"
                     >
-                      <option value="FULL_TIME">Vollzeit</option>
-                      <option value="PART_TIME">Teilzeit</option>
-                      <option value="SEASONAL">Saisonkraft</option>
-                      <option value="APPRENTICE">Auszubildender</option>
+                      <option value="FULL_TIME">{t('personnel.fullTime')}</option>
+                      <option value="PART_TIME">{t('personnel.partTime')}</option>
+                      <option value="SEASONAL">{t('personnel.seasonal')}</option>
+                      <option value="APPRENTICE">{t('personnel.apprentice')}</option>
                     </select>
                   </div>
                   <div>
@@ -448,11 +448,11 @@ export default function PersonalPage() {
                       onChange={(e) => setFormData({ ...formData, allocatedActivity: e.target.value })}
                       className="w-full text-xs bg-white border border-[#e3ede5] rounded-xl px-3 py-2 text-[#2A3035] focus:outline-none focus:border-[#65BC7B]"
                     >
-                      <option value="CROPS">Ackerbau</option>
-                      <option value="LIVESTOCK">Schweinemast</option>
-                      <option value="MACHINERY">Fuhrpark</option>
-                      <option value="POTATO_STORAGE">Kartoffellager</option>
-                      <option value="GENERAL">Betriebsleitung</option>
+                      <option value="CROPS">{t('navigation.ackerbau')}</option>
+                      <option value="LIVESTOCK">{t('navigation.schweinemast')}</option>
+                      <option value="MACHINERY">{t('navigation.maschinen')}</option>
+                      <option value="POTATO_STORAGE">{t('navigation.kartoffellager')}</option>
+                      <option value="GENERAL">{t('users.roleManagementTitle')}</option>
                     </select>
                   </div>
                 </div>
@@ -571,10 +571,10 @@ export default function PersonalPage() {
                       onChange={(e) => setFormData({ ...formData, employmentType: e.target.value })}
                       className="w-full text-xs bg-white border border-[#e3ede5] rounded-xl px-3 py-2 text-[#2A3035] focus:outline-none focus:border-[#65BC7B]"
                     >
-                      <option value="FULL_TIME">Vollzeit</option>
-                      <option value="PART_TIME">Teilzeit</option>
-                      <option value="SEASONAL">Saisonkraft</option>
-                      <option value="APPRENTICE">Auszubildender</option>
+                      <option value="FULL_TIME">{t('personnel.fullTime')}</option>
+                      <option value="PART_TIME">{t('personnel.partTime')}</option>
+                      <option value="SEASONAL">{t('personnel.seasonal')}</option>
+                      <option value="APPRENTICE">{t('personnel.apprentice')}</option>
                     </select>
                   </div>
                   <div>
@@ -586,11 +586,11 @@ export default function PersonalPage() {
                       onChange={(e) => setFormData({ ...formData, allocatedActivity: e.target.value })}
                       className="w-full text-xs bg-white border border-[#e3ede5] rounded-xl px-3 py-2 text-[#2A3035] focus:outline-none focus:border-[#65BC7B]"
                     >
-                      <option value="CROPS">Ackerbau</option>
-                      <option value="LIVESTOCK">Schweinemast</option>
-                      <option value="MACHINERY">Fuhrpark</option>
-                      <option value="POTATO_STORAGE">Kartoffellager</option>
-                      <option value="GENERAL">Betriebsleitung</option>
+                      <option value="CROPS">{t('navigation.ackerbau')}</option>
+                      <option value="LIVESTOCK">{t('navigation.schweinemast')}</option>
+                      <option value="MACHINERY">{t('navigation.maschinen')}</option>
+                      <option value="POTATO_STORAGE">{t('navigation.kartoffellager')}</option>
+                      <option value="GENERAL">{t('users.roleManagementTitle')}</option>
                     </select>
                   </div>
                 </div>

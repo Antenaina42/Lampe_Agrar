@@ -185,16 +185,16 @@ export default function RechnungenPage() {
                                 setPaymentAmount(remaining.toFixed(2));
                               }}
                               className="px-2.5 py-1 text-[11px] font-bold bg-[#eef5ed] text-[#226c3d] hover:bg-[#226c3d] hover:text-white rounded-lg transition-colors"
-                              title="Teilzahlung oder Vollzahlung verbuchen"
+                              title={t('invoices.partialPayment')}
                             >
-                              Zahlung erfassen
+                              {t('invoices.partialPayment')}
                             </button>
                           )}
                           {/* PDF Multilingual Download Trigger */}
                           <button
                             onClick={() => setPdfLangModalInvoice(inv)}
                             className="p-1 text-gray-500 hover:text-[#226c3d] hover:bg-gray-100 rounded-lg transition-colors inline-block align-middle"
-                            title="PDF generieren & herunterladen"
+                            title={t('invoices.generatePdf')}
                           >
                             <Download className="w-4 h-4" />
                           </button>
@@ -224,8 +224,8 @@ export default function RechnungenPage() {
                 </button>
               </div>
               <p className="text-xs text-gray-500 mb-4">
-                Wählen Sie die Ausgabesprache für die Rechnung{' '}
-                <strong className="text-gray-700">{pdfLangModalInvoice.invoiceNumber}</strong>:
+                {t('invoices.pdfLanguage')}:{' '}
+                <strong className="text-gray-700">{pdfLangModalInvoice.invoiceNumber}</strong>
               </p>
               <div className="space-y-2">
                 <button

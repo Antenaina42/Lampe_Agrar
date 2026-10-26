@@ -100,15 +100,15 @@ export default function AusgabenPage() {
         {/* Summary Badges */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="bg-white p-4 rounded-2xl border border-[#e2e8df] shadow-sm">
-            <span className="text-xs font-medium text-gray-500">Betriebsausgaben (Netto)</span>
+            <span className="text-xs font-medium text-gray-500">{t('expenses.totalExpenses')} ({t('journalPage.net')})</span>
             <p className="text-xl font-bold text-amber-700 mt-1">{formatCurrency(totalNet)}</p>
           </div>
           <div className="bg-white p-4 rounded-2xl border border-[#e2e8df] shadow-sm">
-            <span className="text-xs font-medium text-gray-500">Gesamtausgaben (Brutto)</span>
+            <span className="text-xs font-medium text-gray-500">{t('expenses.totalExpenses')} ({t('journalPage.gross')})</span>
             <p className="text-xl font-bold text-gray-800 mt-1">{formatCurrency(totalGross)}</p>
           </div>
           <div className="bg-white p-4 rounded-2xl border border-[#e2e8df] shadow-sm">
-            <span className="text-xs font-medium text-gray-500">Erfasste Belege</span>
+            <span className="text-xs font-medium text-gray-500">{t('dashboard.recentTransactions')}</span>
             <p className="text-xl font-bold text-gray-800 mt-1">{transactions.length}</p>
           </div>
         </div>
@@ -132,12 +132,12 @@ export default function AusgabenPage() {
               onChange={(e) => setActivityFilter(e.target.value)}
               className="text-xs px-3 py-2 rounded-xl bg-[#f8faf7] border border-[#e2e8df] focus:outline-none focus:ring-2 focus:ring-[#226c3d]/20 focus:border-[#226c3d]"
             >
-              <option value="ALL">Alle Betriebszweige</option>
+              <option value="ALL">{t('common.all')}</option>
               <option value="LIVESTOCK">{t('navigation.schweinemast')}</option>
               <option value="CROPS">{t('navigation.ackerbau')}</option>
               <option value="POTATO_STORAGE">{t('navigation.kartoffellager')}</option>
               <option value="MACHINERY">{t('navigation.maschinen')}</option>
-              <option value="GENERAL">Allgemein / Verwaltung</option>
+              <option value="GENERAL">{t('users.roleManagementTitle')}</option>
             </select>
           </div>
         </div>
@@ -148,14 +148,14 @@ export default function AusgabenPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-[#f8faf7] border-b border-[#e2e8df] text-gray-500 font-semibold">
                 <tr>
-                  <th className="py-3 px-4">Nr. / Datum</th>
-                  <th className="py-3 px-4">Bezeichnung</th>
-                  <th className="py-3 px-4">Lieferant</th>
-                  <th className="py-3 px-4">Betriebszweig</th>
-                  <th className="py-3 px-4 text-right">Netto</th>
-                  <th className="py-3 px-4 text-right">USt.</th>
-                  <th className="py-3 px-4 text-right">Brutto</th>
-                  <th className="py-3 px-4 text-center">Status</th>
+                  <th className="py-3 px-4">{t('journalPage.journalNr')} / {t('journalPage.date')}</th>
+                  <th className="py-3 px-4">{t('journalPage.text')}</th>
+                  <th className="py-3 px-4">{t('suppliersPage.newSupplier')}</th>
+                  <th className="py-3 px-4">{t('personnel.allocatedBranch')}</th>
+                  <th className="py-3 px-4 text-right">{t('journalPage.net')}</th>
+                  <th className="py-3 px-4 text-right">{t('journalPage.vat')}</th>
+                  <th className="py-3 px-4 text-right">{t('journalPage.gross')}</th>
+                  <th className="py-3 px-4 text-center">{t('common.status')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">

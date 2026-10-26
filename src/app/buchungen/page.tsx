@@ -53,10 +53,10 @@ export default function BuchungenPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-xl font-bold text-[#212921] tracking-tight">
-              {t('navigation.buchungen')} (Journal)
+              {t('journalPage.title')}
             </h1>
             <p className="text-xs text-[#5c6e5c] mt-0.5">
-              Vollständiges Betriebsbuchhaltungsjournal mit Revisionssicherheit
+              {t('journalPage.subtitle')}
             </p>
           </div>
           <button
@@ -64,7 +64,7 @@ export default function BuchungenPage() {
             className="flex items-center gap-1.5 px-3 py-2 bg-white border border-[#dce3da] hover:bg-[#f2f7f1] text-[#226c3d] text-xs font-bold rounded-xl shadow-sm transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>Journal exportieren (CSV)</span>
+            <span>{t('journalPage.exportCsv')}</span>
           </button>
         </div>
 
@@ -87,7 +87,7 @@ export default function BuchungenPage() {
               onChange={(e) => setTypeFilter(e.target.value)}
               className="text-xs px-3 py-2 rounded-xl bg-[#f8faf7] border border-[#e2e8df] focus:outline-none focus:ring-2 focus:ring-[#226c3d]/20 focus:border-[#226c3d]"
             >
-              <option value="ALL">Alle Buchungen</option>
+              <option value="ALL">{t('journalPage.allBookings')}</option>
               <option value="REVENUE">{t('navigation.einnahmen')}</option>
               <option value="EXPENSE">{t('navigation.ausgaben')}</option>
             </select>
@@ -100,14 +100,14 @@ export default function BuchungenPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-[#f8faf7] border-b border-[#e2e8df] text-gray-500 font-semibold">
                 <tr>
-                  <th className="py-3 px-4">Journal-Nr.</th>
-                  <th className="py-3 px-4">Datum</th>
-                  <th className="py-3 px-4">Art</th>
-                  <th className="py-3 px-4">Buchungstext</th>
-                  <th className="py-3 px-4">Bankkonto</th>
-                  <th className="py-3 px-4 text-right">Netto</th>
-                  <th className="py-3 px-4 text-right">USt.</th>
-                  <th className="py-3 px-4 text-right">Bruttobetrag</th>
+                  <th className="py-3 px-4">{t('journalPage.journalNr')}</th>
+                  <th className="py-3 px-4">{t('journalPage.date')}</th>
+                  <th className="py-3 px-4">{t('journalPage.type')}</th>
+                  <th className="py-3 px-4">{t('journalPage.text')}</th>
+                  <th className="py-3 px-4">{t('journalPage.account')}</th>
+                  <th className="py-3 px-4 text-right">{t('journalPage.net')}</th>
+                  <th className="py-3 px-4 text-right">{t('journalPage.vat')}</th>
+                  <th className="py-3 px-4 text-right">{t('journalPage.gross')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -128,12 +128,12 @@ export default function BuchungenPage() {
                         {trx.type === 'REVENUE' ? (
                           <span className="flex items-center gap-1 text-[11px] font-bold text-[#226c3d]">
                             <ArrowDownLeft className="w-3.5 h-3.5" />
-                            <span>Einnahme</span>
+                            <span>{t('journalPage.income')}</span>
                           </span>
                         ) : (
                           <span className="flex items-center gap-1 text-[11px] font-bold text-amber-700">
                             <ArrowUpRight className="w-3.5 h-3.5" />
-                            <span>Ausgabe</span>
+                            <span>{t('journalPage.expense')}</span>
                           </span>
                         )}
                       </td>

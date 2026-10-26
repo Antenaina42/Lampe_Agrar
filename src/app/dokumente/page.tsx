@@ -59,10 +59,10 @@ export default function DokumentePage() {
 
   const getDocTypeBadge = (type: string) => {
     switch (type) {
-      case 'INVOICE': return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700">Rechnungsbeleg</span>;
-      case 'CONTRACT': return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700">Pachtvertrag</span>;
-      case 'SOIL_ANALYSIS': return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-700">Bodenprobe / Düngung</span>;
-      case 'MACHINE_MANUAL': return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-50 text-purple-700">Maschinenunterlagen</span>;
+      case 'INVOICE': return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700">{t('documentsPage.catInvoice')}</span>;
+      case 'CONTRACT': return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700">{t('documentsPage.catContract')}</span>;
+      case 'SOIL_ANALYSIS': return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-700">{t('documentsPage.catSoilSample')}</span>;
+      case 'MACHINE_MANUAL': return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-50 text-purple-700">{t('documentsPage.catMachineDocs')}</span>;
       default: return <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gray-50 text-gray-700">{type}</span>;
     }
   };
@@ -79,10 +79,10 @@ export default function DokumentePage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-xl font-bold text-[#212921] tracking-tight">
-              {t('navigation.dokumente')}
+              {t('documentsPage.title')}
             </h1>
             <p className="text-xs text-[#5c6e5c] mt-0.5">
-              Zentrales Belegarchiv, Pachtverträge, Bodenanalysen, Düngebedarfsermittlung & Gutachten
+              {t('documentsPage.subtitle')}
             </p>
           </div>
           <button
@@ -90,7 +90,7 @@ export default function DokumentePage() {
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#226c3d] text-white text-xs font-semibold hover:bg-[#1a5530] transition shadow-sm"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>Dokument hochladen</span>
+            <span>{t('documentsPage.uploadDoc')}</span>
           </button>
         </div>
 
@@ -123,23 +123,23 @@ export default function DokumentePage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-[#f8faf7] text-gray-600 font-semibold border-b border-[#e2e8df]">
                 <tr>
-                  <th className="py-2.5 px-4">Dateiname</th>
-                  <th className="py-2.5 px-4">Kategorie</th>
-                  <th className="py-2.5 px-4">Dateigröße</th>
-                  <th className="py-2.5 px-4">Hochgeladen am</th>
-                  <th className="py-2.5 px-4">Bemerkungen</th>
-                  <th className="py-2.5 px-4 text-right">Aktion</th>
+                  <th className="py-2.5 px-4">{t('documentsPage.fileName')}</th>
+                  <th className="py-2.5 px-4">{t('documentsPage.category')}</th>
+                  <th className="py-2.5 px-4">{t('documentsPage.fileSize')}</th>
+                  <th className="py-2.5 px-4">{t('documentsPage.uploadedAt')}</th>
+                  <th className="py-2.5 px-4">{t('documentsPage.notes')}</th>
+                  <th className="py-2.5 px-4 text-right">{t('documentsPage.action')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {loading ? (
                   <tr>
-                    <td colSpan={6} className="py-8 text-center text-gray-400">Laden...</td>
+                    <td colSpan={6} className="py-8 text-center text-gray-400">{t('common.loading')}</td>
                   </tr>
                 ) : filteredDocs.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="py-8 text-center text-gray-400">
-                      Keine Dokumente in dieser Kategorie vorhanden.
+                      {t('documentsPage.empty')}
                     </td>
                   </tr>
                 ) : (
@@ -159,7 +159,7 @@ export default function DokumentePage() {
                         <button
                           onClick={() => alert(`Download: ${doc.fileName}`)}
                           className="p-1.5 text-gray-500 hover:text-[#226c3d] rounded-lg hover:bg-gray-100 transition"
-                          title="Herunterladen"
+                          title={t('common.export')}
                         >
                           <Download className="w-4 h-4" />
                         </button>
@@ -176,10 +176,10 @@ export default function DokumentePage() {
         {isModalOpen && (
           <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-gray-200">
-              <h2 className="text-base font-bold text-gray-800 mb-4">Dokument archivieren</h2>
+              <h2 className="text-base font-bold text-gray-800 mb-4">{t('documentsPage.archiveModalTitle')}</h2>
               <form onSubmit={handleSubmit} className="space-y-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">Dateiname / Bezeichnung *</label>
+                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('documentsPage.fileNameReq')}</label>
                   <input
                     type="text"
                     required
@@ -190,21 +190,21 @@ export default function DokumentePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">Kategorie</label>
+                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('documentsPage.category')}</label>
                   <select
                     value={formData.entityType}
                     onChange={(e) => setFormData({ ...formData, entityType: e.target.value })}
                     className="w-full px-3 py-1.5 text-xs rounded-xl border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#226c3d]"
                   >
-                    <option value="INVOICE">Rechnungsbeleg</option>
-                    <option value="CONTRACT">Pachtvertrag / Lieferkontrakt</option>
-                    <option value="SOIL_ANALYSIS">Bodenprobe / Düngebedarfsermittlung</option>
-                    <option value="MACHINE_MANUAL">Maschinenpapiere / UVV-Prüfung</option>
-                    <option value="GENERAL">Sonstiges Dokument</option>
+                    <option value="INVOICE">{t('documentsPage.catInvoice')}</option>
+                    <option value="CONTRACT">{t('documentsPage.catContract')}</option>
+                    <option value="SOIL_ANALYSIS">{t('documentsPage.catSoilSample')}</option>
+                    <option value="MACHINE_MANUAL">{t('documentsPage.catMachineDocs')}</option>
+                    <option value="GENERAL">{t('documentsPage.catOther')}</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">Bemerkung / Notiz</label>
+                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('documentsPage.notes')}</label>
                   <textarea
                     rows={2}
                     value={formData.notes}
@@ -219,13 +219,13 @@ export default function DokumentePage() {
                     onClick={() => setIsModalOpen(false)}
                     className="px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-100 rounded-xl"
                   >
-                    Abbrechen
+                    {t('common.cancel')}
                   </button>
                   <button
                     type="submit"
                     className="px-4 py-1.5 text-xs font-semibold bg-[#226c3d] text-white rounded-xl hover:bg-[#1a5530]"
                   >
-                    Speichern
+                    {t('common.save')}
                   </button>
                 </div>
               </form>

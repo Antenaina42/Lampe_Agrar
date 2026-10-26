@@ -127,42 +127,33 @@ export default function LoginPage() {
             <ArrowRight className="w-4 h-4" />
           </button>
 
-          {/* Quick Demo Accounts Selection */}
+          {/* Super Admin Demo Account Button */}
           <div className="pt-5 border-t border-gray-100 mt-6">
-            <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#2A3035] mb-2.5">
-              <ShieldCheck className="w-4 h-4 text-[#65BC7B]" />
-              <span>{t('auth.demoAccountsTitle')}</span>
-            </div>
-            <div className="grid grid-cols-2 gap-2 text-[10px]">
-              <button
-                type="button"
-                onClick={() => setDemoAccount('gesa.langenberg@lampe-agrar.de')}
-                className="p-2 text-left rounded-2xl bg-[#f0f9f3] hover:bg-[#e3ede5] text-[#2A3035] font-semibold transition border border-[#65BC7B]/20 truncate"
-              >
-                Gesa Langenberg ({t('auth.roleOwnerF')})
-              </button>
-              <button
-                type="button"
-                onClick={() => setDemoAccount('josef.langenberg@lampe-agrar.de')}
-                className="p-2 text-left rounded-2xl bg-[#f0f9f3] hover:bg-[#e3ede5] text-[#2A3035] font-semibold transition border border-[#65BC7B]/20 truncate"
-              >
-                Dr. Josef Langenberg ({t('auth.roleOwnerM')})
-              </button>
-              <button
-                type="button"
-                onClick={() => setDemoAccount('kenneth.makowka@lampe-agrar.de')}
-                className="p-2 text-left rounded-2xl bg-[#f0f9f3] hover:bg-[#e3ede5] text-[#2A3035] font-semibold transition border border-[#65BC7B]/20 truncate"
-              >
-                Kenneth Makowka ({t('auth.roleCropsHead')})
-              </button>
-              <button
-                type="button"
-                onClick={() => setDemoAccount('berater@steuerbuero-diepholz.de')}
-                className="p-2 text-left rounded-2xl bg-[#f0f9f3] hover:bg-[#e3ede5] text-[#2A3035] font-semibold transition border border-[#65BC7B]/20 truncate"
-              >
-                Steuerberater ({t('auth.roleAuditor')})
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('gesa.langenberg@lampe-agrar.de');
+                setPassword('password123');
+              }}
+              className="w-full p-3 rounded-2xl bg-[#f0f9f3] hover:bg-[#e3ede5] border border-[#65BC7B]/30 flex items-center justify-between text-left transition group shadow-xs"
+            >
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-white border border-[#65BC7B]/30 flex items-center justify-center text-[#65BC7B] shadow-2xs">
+                  <ShieldCheck className="w-4 h-4 text-[#65BC7B]" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-[#2A3035] group-hover:text-[#226c3d] transition">
+                    {t('auth.demoSuperAdminBtn')}
+                  </div>
+                  <div className="text-[10px] text-[#637381] font-medium">
+                    {t('auth.demoSuperAdminDesc')}
+                  </div>
+                </div>
+              </div>
+              <span className="text-[10px] font-bold text-[#226c3d] bg-white px-2.5 py-1 rounded-lg border border-[#65BC7B]/20 shadow-2xs">
+                {t('auth.oneClickLogin')}
+              </span>
+            </button>
           </div>
         </form>
       </div>

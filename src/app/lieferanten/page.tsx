@@ -85,15 +85,15 @@ export default function LieferantenPage() {
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#226c3d] text-white text-xs font-semibold hover:bg-[#1a5530] transition shadow-sm"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>Neuer Lieferant</span>
+            <span>{t('suppliersPage.newSupplier')}</span>
           </button>
         </div>
 
         {loading ? (
-          <div className="p-8 text-center text-xs text-gray-500">Laden...</div>
+          <div className="p-8 text-center text-xs text-gray-500">{t('common.loading')}</div>
         ) : suppliers.length === 0 ? (
           <div className="bg-white p-8 rounded-2xl border border-[#e2e8df] text-center text-xs text-gray-500">
-            Keine Lieferanten eingetragen.
+            {t('common.noData')}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -108,13 +108,13 @@ export default function LieferantenPage() {
                       {s.supplierNumber}
                     </span>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 font-bold">
-                      Zahlungsziel: {s.paymentTermsDays} Tage
+                      {t('suppliersPage.paymentTerms')}: {s.paymentTermsDays} {t('suppliersPage.paymentDays')}
                     </span>
                   </div>
                   <h2 className="text-base font-bold text-gray-800">{s.companyName}</h2>
                   {s.contactName && (
                     <p className="text-xs text-gray-500 mt-0.5 font-medium">
-                      Ansprechpartner: {s.contactName}
+                      {t('suppliersPage.contactPerson')}: {s.contactName}
                     </p>
                   )}
 
@@ -163,10 +163,10 @@ export default function LieferantenPage() {
         {isModalOpen && (
           <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-gray-200">
-              <h2 className="text-base font-bold text-gray-800 mb-4">Neuen Lieferanten anlegen</h2>
+              <h2 className="text-base font-bold text-gray-800 mb-4">{t('suppliersPage.createTitle')}</h2>
               <form onSubmit={handleSubmit} className="space-y-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">Firmenname *</label>
+                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('suppliersPage.companyName')}</label>
                   <input
                     type="text"
                     required
@@ -178,7 +178,7 @@ export default function LieferantenPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Ansprechpartner</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('suppliersPage.contactPerson')}</label>
                     <input
                       type="text"
                       value={formData.contactName}
@@ -187,7 +187,7 @@ export default function LieferantenPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Zahlungsziel (Tage)</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('suppliersPage.paymentTerms')}</label>
                     <input
                       type="number"
                       value={formData.paymentTermsDays}
@@ -198,7 +198,7 @@ export default function LieferantenPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Telefon</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('suppliersPage.phone')}</label>
                     <input
                       type="text"
                       value={formData.phone}
@@ -207,7 +207,7 @@ export default function LieferantenPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">E-Mail</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('suppliersPage.email')}</label>
                     <input
                       type="email"
                       value={formData.email}
@@ -217,7 +217,7 @@ export default function LieferantenPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">IBAN</label>
+                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('suppliersPage.iban')}</label>
                   <input
                     type="text"
                     value={formData.iban}
@@ -228,7 +228,7 @@ export default function LieferantenPage() {
                 </div>
                 <div className="grid grid-cols-3 gap-2">
                   <div className="col-span-2">
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Adresse</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('suppliersPage.address')}</label>
                     <input
                       type="text"
                       value={formData.address}
@@ -237,7 +237,7 @@ export default function LieferantenPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Ort</label>
+                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">{t('suppliersPage.city')}</label>
                     <input
                       type="text"
                       value={formData.city}
@@ -252,13 +252,13 @@ export default function LieferantenPage() {
                     onClick={() => setIsModalOpen(false)}
                     className="px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-100 rounded-xl"
                   >
-                    Abbrechen
+                    {t('common.cancel')}
                   </button>
                   <button
                     type="submit"
                     className="px-4 py-1.5 text-xs font-semibold bg-[#226c3d] text-white rounded-xl hover:bg-[#1a5530]"
                   >
-                    Speichern
+                    {t('common.save')}
                   </button>
                 </div>
               </form>
