@@ -15,6 +15,16 @@ export async function POST(request: Request) {
       );
     }
 
+    if (!process.env.DATABASE_URL) {
+      return NextResponse.json(
+        {
+          error:
+            'DATABASE_URL ist nicht definiert. Bitte in Hostinger unter Environment Variables eintragen.',
+        },
+        { status: 500 }
+      );
+    }
+
     const user = await prisma.user.findUnique({
       where: { email: email.trim().toLowerCase() },
       include: { role: true, preference: true },
@@ -64,7 +74,10 @@ export async function POST(request: Request) {
     console.error('Login error:', error);
 
     let errorMessage = 'Interner Serverfehler bei der Anmeldung.';
-    if (error?.code === 'P1001') {
+    if (error?.message?.includes('must start with the protocol `mysql://`')) {
+      errorMessage =
+        'DATABASE_URL Format-Fehler: Die URL darf keine Anführungszeichen (" oder \') in den Hostinger-Variablen enthalten. Format: mysql://user:password@127.0.0.1:3306/dbname';
+    } else if (error?.code === 'P1001') {
       errorMessage = 'Datenbank nicht erreichbar (P1001). Bitte Host (127.0.0.1 statt localhost) und Port prüfen.';
     } else if (error?.code === 'P1000') {
       errorMessage = 'Datenbank-Authentifizierung fehlgeschlagen (P1000). Benutzer oder Passwort ungültig.';
